@@ -1,0 +1,65 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class SchereSteinPapier {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        int anzahlRunden = 3; // Anzahl der Runden, kann angepasst werden
+
+        int spielerSiege = 0;
+        int computerSiege = 0;
+
+        // Schleife für jede Runde
+        for (int runde = 1; runde <= anzahlRunden; runde++) {
+            System.out.println("Runde " + runde);
+
+            // Eingabe der Spielerwahl
+            System.out.println("Schere, Stein oder Papier? (Geben Sie 'schere', 'stein' oder 'papier' ein.)");
+            String spielerWahl = scanner.nextLine().toLowerCase();
+
+            // Überprüfung der gültigen Eingabe
+            if (!(spielerWahl.equals("schere") || spielerWahl.equals("stein") || spielerWahl.equals("papier"))) {
+                System.out.println("Ungültige Eingabe. Bitte geben Sie 'schere', 'stein' oder 'papier' ein.");
+                runde--; // Reduzieren der Runde, um die aktuelle Runde zu wiederholen
+                continue;
+            }
+
+            // Zufällige Auswahl für den Computergegner
+            String computerWahl;
+            int zufallszahl = random.nextInt(3); // 0 für Schere, 1 für Stein, 2 für Papier
+
+            if (zufallszahl == 0) {
+                computerWahl = "schere";
+            } else if (zufallszahl == 1) {
+                computerWahl = "stein";
+            } else {
+                computerWahl = "papier";
+            }
+
+            System.out.println("Computergegner wählt: " + computerWahl);
+
+            // Überprüfung des Gewinners
+            if (spielerWahl.equals(computerWahl)) {
+                System.out.println("Unentschieden!");
+            } else if ((spielerWahl.equals("schere") && computerWahl.equals("papier")) ||
+                    (spielerWahl.equals("stein") && computerWahl.equals("schere")) ||
+                    (spielerWahl.equals("papier") && computerWahl.equals("stein"))) {
+                System.out.println("Sie haben gewonnen!");
+                spielerSiege++;
+            } else {
+                System.out.println("Computergegner gewinnt!");
+                computerSiege++;
+            }
+
+            // Anzeige der aktuellen Siege
+            System.out.println("Ihre Siege: " + spielerSiege);
+            System.out.println("Computergegner Siege: " + computerSiege);
+        }
+
+        // Ausgabe der Endresultate
+        System.out.println("Spiel beendet. Vielen Dank fürs Spielen!");
+        scanner.close();
+    }
+}
